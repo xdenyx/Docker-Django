@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Images</title>
+</head>
+<body>
+<h1>Upload Image</h1>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Upload</button>
+</form>
+<hr>
+<h2>Uploaded Images</h2>
+{% for img in images %}
+  <div>
+    {% if img.thumbnails.128 %}
+      <img src="{{ MEDIA_URL }}{{ img.thumbnails.128 }}" alt="thumbnail" width="128" height="128">
+    {% else %}
+      <p>No thumbnail yet.</p>
+    {% endif %}
+    <p>Original: <a href="{{ MEDIA_URL }}{{ img.original.name }}">{{ img.original.name }}</a></p>
+  </div>
+{% endfor %}
+</body>
+</html>
